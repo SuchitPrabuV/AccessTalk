@@ -39,11 +39,16 @@ def get_landmarks(frame):
     # Get the first detected hand
     hand_landmarks = result.multi_hand_landmarks[0]
 
+    x_vals = [p.x for p in hand_landmarks.landmark]
+    y_vals = [p.y for p in hand_landmarks.landmark]
+
+    min_x = min(x_vals)
+    min_y = min(y_vals)
+
     landmark_list = []
 
-    # Extract x and y from all 21 landmarks
     for point in hand_landmarks.landmark:
-        landmark_list.extend([point.x, point.y])
+        landmark_list.extend([point.x - min_x, point.y - min_y])
 
     # Draw the hand skeleton on the frame
     mp_draw.draw_landmarks(

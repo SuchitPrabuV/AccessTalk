@@ -44,10 +44,16 @@ for gesture in os.listdir(DATASET_DIR):
         if result.multi_hand_landmarks:
             hand = result.multi_hand_landmarks[0]
 
-            row = []
+            hand_landmarks = result.multi_hand_landmarks[0]
+            x_vals = [p.x for p in hand_landmarks.landmark]
+            y_vals = [p.y for p in hand_landmarks.landmark]
 
-            for point in hand.landmark:
-                row.extend([point.x, point.y])
+            min_x = min(x_vals)
+            min_y = min(y_vals)
+
+            row = []
+            for point in hand_landmarks.landmark:
+                row.extend([point.x - min_x, point.y - min_y])
 
             data.append(row)
             labels.append(gesture)

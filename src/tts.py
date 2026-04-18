@@ -39,7 +39,7 @@ def speak_word(word, frame, confidence):
     current_time = time.time()
 
     # High confidence: show prediction
-    if confidence >= 0.80:
+    if confidence >= 0.40:
         cv2.rectangle(frame, (10, 10), (420, 100), (0, 180, 0), -1)
 
         cv2.putText(
@@ -80,7 +80,7 @@ def speak_word(word, frame, confidence):
     # - confidence is high
     # - word is new OR cooldown time passed
     if (
-        confidence >= 0.80 and
+        confidence >= 0.40 and
         (word != _last_spoken or current_time - _last_time > COOLDOWN)
     ):
         _last_spoken = word
